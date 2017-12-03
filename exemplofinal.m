@@ -3,12 +3,12 @@ clear all;
 close all;
 
 
-imagemColorida = imread('image(47).jpg');
+imagemColorida = imread('BD/image(41).jpg');
 imagemCinza = rgb2gray(imagemColorida);
 
 figure, imshow(imagemCinza);
 
-[mserRegions, mserConnComp] = detectMSERFeatures(imagemCinza, 'RegionAreaRange',[100 10000],'ThresholdDelta',6);
+[mserRegions, mserConnComp] = detectMSERFeatures(imagemCinza, 'RegionAreaRange',[100 5000],'ThresholdDelta',4);
 mserRegionsPixels = vertcat(cell2mat(mserRegions.PixelList));
 % RegionAreaRange delimita o tamanho, em pixels, de area dos objetos a serem 
 % determinados, com o uso de 'MaxAreaVariation', que no caso eh [100, 1000]
@@ -33,8 +33,8 @@ edgeMask = edge(imagemCinza, 'Canny');
 
 imagem_filtrada = mserFiltro & edgeMask;
 
-SE1 = strel('disk', 1, 0);
-imagem_filtrada_dilatada = imdilate(imagem_filtrada, SE1);
+strel = strel('disk', 1, 0);
+imagem_filtrada_dilatada = imdilate(imagem_filtrada, strel);
 
 stats = regionprops(mserConnComp, 'Extent', 'Eccentricity', 'Solidity', 'Image', 'BoundingBox');
 
