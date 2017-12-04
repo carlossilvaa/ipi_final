@@ -51,6 +51,7 @@ mascarada = im_filled;
 %mascarada = imbinarize(mascarada,graythresh(mascarada));
 %figure, imshow(mascarada), title('rebinarização');
 
+
 [mserRegions, mserConnComp] = detectMSERFeatures(mascarada, 'RegionAreaRange',[100 7000],'ThresholdDelta',4);
 mserRegionsPixels = vertcat(cell2mat(mserRegions.PixelList));
 
